@@ -43,8 +43,8 @@
                                             <td class="p-0 text-center">{{ $i + 1 }}</td>
                                             <td class="font-weight-600">{{ $k->name }}</td>
                                             <td class="align-middle">{{ $k->email }}</td>
-                                            <td class="text-truncate">{{ $k->alamat }}</td>
-                                            <td class="align-middle">{{ $k->no_telpon }}</td>
+                                            <td class="text-truncate">{{ $k->address }}</td>
+                                            <td class="align-middle">{{ $k->phone }}</td>
                                             <td class="align-middle">{{ $k->jumlah_cuti }} Hari</td>
                                             <td>
                                                 <a class="btn btn-action bg-purple mr-1"
@@ -93,7 +93,7 @@
                                             <i class="fas fa-envelope"></i>
                                         </div>
                                     </div>
-                                    <input type="text" class="form-control" name="alamat" required>
+                                    <input type="text" class="form-control" name="address" required>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -129,7 +129,7 @@
                                             <i class="fas fa-envelope"></i>
                                         </div>
                                     </div>
-                                    <input type="text" class="form-control" name="no_telpon" required>
+                                    <input type="text" class="form-control" name="phone" required>
                                 </div>
                             </div>
                             <div class="form-group">

@@ -17,9 +17,9 @@ class KaryawanController extends Controller
      */
     public function index()
     {
+        // ->where('user_id', Auth::user()->id)
         $karyawan = DB::table('users')
-            ->join('karyawan', 'users.id', '=', 'karyawan.user_id')
-            ->select('users.name', 'users.email', 'karyawan.id', 'karyawan.alamat', 'karyawan.no_telpon', 'karyawan.jumlah_cuti')
+            ->where('role', 'karyawan')
             ->get();
 
         return view('pages.Karyawan.index', ['karyawan' => $karyawan]);
@@ -43,15 +43,25 @@ class KaryawanController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $status = $request->validate([
             'name' => 'required',
+            'address' => 'required',
+            'phone' => 'required',
+            'jumlah_cuti' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required',
         ]);
 
+        if (!$status) {
+            return back()->with('error', 'Error validate');
+        }
+
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->address = $request->address;
+        $user->jumlah_cuti = $request->jumlah_cuti;
         $user->role = 'karyawan';
         $user->password = Hash::make($request->password);
 
@@ -80,9 +90,7 @@ class KaryawanController extends Controller
     public function edit($id)
     {
         $karyawan = DB::table('users')
-            ->join('karyawan', 'users.id', '=', 'karyawan.user_id')
-            ->select('users.name', 'users.email', 'karyawan.id', 'karyawan.alamat', 'karyawan.no_telpon', 'karyawan.jumlah_cuti')
-            ->where('karyawan.id', $id)
+            ->where('id', $id)
             ->get();
 
         return view('pages.karyawan.FormEdit', ['karyawan' => $karyawan]);
@@ -101,17 +109,20 @@ class KaryawanController extends Controller
             ->where('id', $request->id)
             ->update([
                 'name' => $request->name,
-                'email' => $request->email
-            ]);
-
-        DB::table('karyawan')
-            ->where('id', $request->id)
-            ->update([
-                'user_id' => $request->id,
-                'alamat' => $request->alamat,
-                'no_telpon' => $request->no_telpon,
+                'email' => $request->email,
+                'address' => $request->address,
+                'phone' => $request->phone,
                 'jumlah_cuti' => $request->jumlah_cuti
             ]);
+
+        if ($request->password) {
+            DB::table('users')
+                ->where('id', $request->id)
+                ->update([
+                    'passsword' => $request->password
+                ]);
+        }
+
         return redirect()->route('karyawan.index')->with(['success' => 'Data Karyawan Berhasil Diupdate!']);
 
     }

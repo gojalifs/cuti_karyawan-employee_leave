@@ -19,34 +19,38 @@
                                             <input type="hidden" class="form-control" name="id"
                                                 value="{{ $k->id }}">
                                             <input type="text" class="form-control" name="name"
-                                                value="{{ $k->name }}">
+                                                value="{{ $k->name }}" required>
                                         </div>
                                         <div class="form-group">
                                             <label>Email</label>
                                             <input type="text" class="form-control" name="email"
-                                                value="{{ $k->email }}">
+                                                value="{{ $k->email }}" required>
                                         </div>
                                         <div class="form-group">
                                             <label>Alamat</label>
-                                            <input type="text" class="form-control" name="alamat"
-                                                value="{{ $k->alamat }}">
+                                            <input type="text" class="form-control" name="address"
+                                                value="{{ $k->address }}" required>
                                         </div>
                                         <div class="form-group">
                                             <label>No Telpon</label>
-                                            <input type="text" class="form-control" name="no_telpon"
-                                                value="{{ $k->no_telpon }}">
+                                            <input type="text" class="form-control" name="phone"
+                                                value="{{ $k->phone }}" required>
                                         </div>
 
                                         <div class="form-group">
                                             <label>Jumlah Cuti</label>
                                             <input type="text" class="form-control" name="jumlah_cuti"
-                                                value="{{ $k->jumlah_cuti }}">
+                                                value="{{ $k->jumlah_cuti }}" required>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Kata Sandi Baru</label>
+                                            <input id="password" type="text" class="form-control" name="password">
+                                        </div>
+                                        <div class="card-footer text-right">
+                                            <button class="btn btn-primary mr-1" type="submit">Submit</button>
                                         </div>
                                     </div>
-                                    <div class="card-footer text-right">
-                                        <button class="btn btn-primary mr-1" type="submit">Submit</button>
-                                    </div>
-                                </div>
                             @endforeach
                         </Form>
 
