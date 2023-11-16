@@ -135,7 +135,7 @@ class PermohonanCutiController extends Controller
         $durasi = date_diff($tglMulai, $tglAkhir);
 
 
-        $jmlCuti = $jumlah_cuti - ($durasi->days);
+        $jmlCuti = $jumlah_cuti - ($durasi->days + 1);
         $user->jumlah_cuti = $jmlCuti;
         $cuti->updated_at = date("Y-m-d H:i:s");
         $cuti->save();
