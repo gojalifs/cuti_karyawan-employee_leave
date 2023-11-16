@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Hash;
 use Illuminate\Http\Request;
-use App\Models\Karyawan;
 use DB;
-use Log;
 
 
 class KaryawanController extends Controller

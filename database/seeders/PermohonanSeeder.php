@@ -17,7 +17,7 @@ class PermohonanSeeder extends Seeder
     public function run()
     {
         $permohonan = Permohonan_Cuti::create([
-            'user_id' => '1',
+            'user_id' => 2,
             'alasan_cuti' => 'libur Akhir Tahun',
             'tgl_mulai' => '2021-07-01',
             'tgl_akhir' => '2021-07-03',
@@ -25,7 +25,7 @@ class PermohonanSeeder extends Seeder
         ]);
         
         $permohonan = Permohonan_Cuti::create([
-            'user_id' => '2',
+            'user_id' => 2,
             'alasan_cuti' => 'Istri Melahirkan',
             'tgl_mulai' => '2021-07-01',
             'tgl_akhir' => '2021-07-06',
@@ -33,7 +33,7 @@ class PermohonanSeeder extends Seeder
         ]);
         
         $permohonan = Permohonan_Cuti::create([
-            'user_id' => '3',
+            'user_id' => 3,
             'alasan_cuti' => 'Istri Melahirkan',
             'tgl_mulai' => '2021-07-02',
             'tgl_akhir' => '2021-07-07',
@@ -41,7 +41,7 @@ class PermohonanSeeder extends Seeder
         ]);
         
         $permohonan = Permohonan_Cuti::create([
-            'user_id' => '3',
+            'user_id' => 3,
             'alasan_cuti' => 'Menikah',
             'tgl_mulai' => '2021-07-04',
             'tgl_akhir' => '2021-07-07',
@@ -49,7 +49,7 @@ class PermohonanSeeder extends Seeder
         ]);
         
         $permohonan = Permohonan_Cuti::create([
-            'user_id' => '1',
+            'user_id' => 4,
             'alasan_cuti' => 'Liburan',
             'tgl_mulai' => '2021-07-12',
             'tgl_akhir' => '2021-07-13',
@@ -57,7 +57,7 @@ class PermohonanSeeder extends Seeder
         ]);
         
         $permohonan = Permohonan_Cuti::create([
-            'user_id' => '2',
+            'user_id' => 4,
             'alasan_cuti' => 'Liburan',
             'tgl_mulai' => '2021-07-12',
             'tgl_akhir' => '2021-07-13',
@@ -65,7 +65,7 @@ class PermohonanSeeder extends Seeder
         ]);
         
         $permohonan = Permohonan_Cuti::create([
-            'user_id' => '1',
+            'user_id' => 3,
             'alasan_cuti' => 'Saudara Meniggal',
             'tgl_mulai' => '2021-07-15',
             'tgl_akhir' => '2021-07-17',

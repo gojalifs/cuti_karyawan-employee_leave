@@ -14,13 +14,15 @@ class CreatePermohonanCutiTable extends Migration
     public function up()
     {
         Schema::create('permohonan_cuti', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('user_id');
+            $table->id('id');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnUpdate()->restrictOnDelete();
             $table->string('alasan_cuti');
             $table->date('tgl_mulai');
             $table->date('tgl_akhir');
             $table->string('status');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
     }
 

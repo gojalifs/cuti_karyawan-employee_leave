@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use DB;
 use Auth;
 use App\Models\Permohonan_Cuti;
-use App\Models\Karyawan;
 
 
 class DashboardController extends Controller

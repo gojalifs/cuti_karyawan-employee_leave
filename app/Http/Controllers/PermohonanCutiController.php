@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Permohonan_Cuti;
-use App\Models\Karyawan;
 use DB;
 use Auth;
 use DateTime;
