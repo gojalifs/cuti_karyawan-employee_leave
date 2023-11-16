@@ -15,7 +15,8 @@
                 <table class="table table-striped" id="table-1">
                     <tr>
                         <th class="text-center">No</th>
-                        <th>nama Lengkap</th>
+                        <th>Nama Lengkap</th>
+                        <th>Email</th>
                         <th>Alamat</th>
                         <th>No Telpon</th>
                         <th>Jumlah Cuti</th>
@@ -25,6 +26,7 @@
                         <tr>
                             <td class="p-0 text-center">{{$i+1}}</td>
                             <td class="font-weight-600">{{$k->name}}</td>
+                            <td class="align-middle">{{$k->email}}</td>
                             <td class="text-truncate">{{$k->alamat}}</td>
                             <td class="align-middle">{{$k->no_telpon}}</td>
                             <td class="align-middle">{{$k->jumlah_cuti}} Hari</td>

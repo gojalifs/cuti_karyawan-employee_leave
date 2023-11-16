@@ -17,11 +17,11 @@ class KaryawanController extends Controller
     public function index()
     {
         $karyawan = DB::table('users')
-        ->join('karyawan','users.id','=','karyawan.user_id')
-        ->select('users.name','karyawan.id','karyawan.alamat','karyawan.no_telpon','karyawan.jumlah_cuti')
-        ->get();
-        
-        return view('pages.Karyawan.index',['karyawan' =>$karyawan]);
+            ->join('karyawan', 'users.id', '=', 'karyawan.user_id')
+            ->select('users.name', 'users.email', 'karyawan.id', 'karyawan.alamat', 'karyawan.no_telpon', 'karyawan.jumlah_cuti')
+            ->get();
+
+        return view('pages.Karyawan.index', ['karyawan' => $karyawan]);
     }
 
     /**
@@ -65,12 +65,12 @@ class KaryawanController extends Controller
     public function edit($id)
     {
         $karyawan = DB::table('users')
-        ->join('karyawan','users.id','=','karyawan.user_id')
-        ->select('users.name','karyawan.id','karyawan.alamat','karyawan.no_telpon','karyawan.jumlah_cuti')
-        ->where('karyawan.id',$id)
-        ->get();
-       
-        return view('pages.karyawan.FormEdit',['karyawan' => $karyawan]);
+            ->join('karyawan', 'users.id', '=', 'karyawan.user_id')
+            ->select('users.name', 'users.email', 'karyawan.id', 'karyawan.alamat', 'karyawan.no_telpon', 'karyawan.jumlah_cuti')
+            ->where('karyawan.id', $id)
+            ->get();
+
+        return view('pages.karyawan.FormEdit', ['karyawan' => $karyawan]);
     }
 
     /**
@@ -83,17 +83,20 @@ class KaryawanController extends Controller
     public function update(Request $request)
     {
         DB::table('users')
-              ->where('id', $request->id)
-              ->update(['name' => $request->name]);
-        
-        DB::table('karyawan')
-            ->where('id',$request->id)
+            ->where('id', $request->id)
             ->update([
-            'user_id' => $request->id,
-            'alamat' => $request->alamat,
-            'no_telpon' => $request->no_telpon,
-            'jumlah_cuti' => $request->jumlah_cuti
-        ]);
+                'name' => $request->name,
+                'email' => $request->email
+            ]);
+
+        DB::table('karyawan')
+            ->where('id', $request->id)
+            ->update([
+                'user_id' => $request->id,
+                'alamat' => $request->alamat,
+                'no_telpon' => $request->no_telpon,
+                'jumlah_cuti' => $request->jumlah_cuti
+            ]);
         return redirect()->route('karyawan.index')->with(['success' => 'Data Karyawan Berhasil Diupdate!']);
 
     }
