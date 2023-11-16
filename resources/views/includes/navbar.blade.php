@@ -16,10 +16,10 @@
                 class="user-img-radious-style"> <span class="d-sm-none d-lg-inline-block"></span></a>
             <div class="dropdown-menu dropdown-menu-right pullDown">
               <div class="dropdown-title">Hello {{ Str::limit(Auth::user()->name) }}</div>
-              <a href="#" class="dropdown-item has-icon"> <i class="fas fa-cog"></i>
+              {{-- <a href="javascript:void(0)" class="dropdown-item has-icon settingPanelToggle"> <i class="fas fa-cog"></i>
                 Settings
-              </a>
-              <div class="dropdown-divider"></div>
+              </a> --}}
+              {{-- <div class="dropdown-divider"></div> --}}
               <a href="{{route('logout')}}" class="dropdown-item has-icon text-danger"> <i class="fas fa-sign-out-alt"></i>
                 Logout
               </a>
