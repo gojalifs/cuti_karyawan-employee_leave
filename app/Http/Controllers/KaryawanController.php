@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Hash;
 use Illuminate\Http\Request;
 use App\Models\Karyawan;
 use DB;
+use Log;
 
 
 class KaryawanController extends Controller
@@ -42,7 +45,21 @@ class KaryawanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required',
+        ]);
+
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->role = 'karyawan';
+        $user->password = Hash::make($request->password);
+
+        $user->save();
+
+        return redirect()->route('karyawan.index')->with(['success' => 'Berhasil Menambah Karyawan']);
     }
 
     /**
