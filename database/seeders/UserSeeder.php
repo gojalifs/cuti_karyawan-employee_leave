@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
             'address' => 'Kalimalang',
             'phone' => '62898564433',
             'jumlah_cuti' => 30,
-            'role' => 'Karyawan',
+            'role' => 'karyawan',
             'password' => Hash::make("putri"),
         ]);
 
@@ -31,7 +31,7 @@ class UserSeeder extends Seeder
             'address' => 'Cikarang',
             'phone' => '6289856534534',
             'jumlah_cuti' => 40,
-            'role' => 'Karyawan',
+            'role' => 'karyawan',
             'password' => Hash::make("lya"),
         ]);
 
