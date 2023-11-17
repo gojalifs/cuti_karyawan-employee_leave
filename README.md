@@ -1,5 +1,13 @@
 # Aplikasi Cuti Karyawan
+This is an application to apply for leave in the company. This application is built using laravel 8, and is currently migrating to laravel 10. 
+This app is include 3 role of employee, that is **Super Admin**, **HR Staff**, and **Employee/Staff**.
 
+Please, enjoy.
+
+<img src="https://github.com/gojalifs/cuti_karyawan-employee_leave/assets/60059041/a24cbf9e-1df0-48fd-b6e1-c15b606e685b" width="640" height="360">
+
+
+<img src="https://github.com/gojalifs/cuti_karyawan-employee_leave/assets/60059041/d5db7246-94e1-4ad9-9692-f5689a75da1c" width="640" height="360">
 
 # Installation
 
@@ -30,7 +38,7 @@ $ php artisan migrate --seed
 
 ```
 # Access the website with the url in a web browser
-  http://localhost/cuti_karyawan_app/public
+  http://localhost/cuti_karyawan-employee_leave/public
 	
 ```
 
@@ -38,15 +46,15 @@ $ php artisan migrate --seed
 
 ```
 # Account Karyawan
-  username : fahrul@example.com
-  password : fahrul123
+  username : putri@example.com
+  password : putri
 
 # Account Super Admin
-  username : galih@example.com
-  password : galih123  
+  username : nindi@example.com
+  password : nindi  
 
 # Account Staf HR
-  username : iksan@example.com
-  password : iksan123 
+  username : octa@example.com
+  password : octa
 	
 ```
