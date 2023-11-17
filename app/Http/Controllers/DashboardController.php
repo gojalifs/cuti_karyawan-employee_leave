@@ -15,7 +15,7 @@ class DashboardController extends Controller
 
         $permohonan = DB::table('users')
             ->join('permohonan_cuti', 'users.id', '=', 'permohonan_cuti.user_id')
-            ->select('users.name', 'permohonan_cuti.id', 'permohonan_cuti.alasan_cuti', 'permohonan_cuti.tgl_mulai', 'permohonan_cuti.tgl_akhir', 'permohonan_cuti.status')
+            ->select('users.name', 'users.email', 'permohonan_cuti.id', 'permohonan_cuti.alasan_cuti', 'permohonan_cuti.tgl_mulai', 'permohonan_cuti.tgl_akhir', 'permohonan_cuti.status')
             ->where('permohonan_cuti.status', 'pending')
             ->limit(5)
             ->get();

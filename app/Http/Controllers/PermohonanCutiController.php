@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\LeaveMail;
 use App\Models\Permohonan_Cuti;
 use App\Models\User;
+use DateInterval;
+use DatePeriod;
 use Illuminate\Http\Request;
 use DB;
 use Auth;
-use DateTime;
-use Illuminate\Support\Carbon;
+use Mail;
 
 
 
@@ -132,15 +134,39 @@ class PermohonanCutiController extends Controller
 
         $tglMulai = date_create($tgl_mulai);
         $tglAkhir = date_create($tgl_akhir);
-        $durasi = date_diff($tglMulai, $tglAkhir);
+        
+        // Penghitungan jumlah cuti
+        $interval = new DateInterval('P1D'); // 1 day interval
 
+        $workdays = 0;
+        $durasi = new DatePeriod($tglMulai, $interval, $tglAkhir->modify('+1 day'));
+        $workdays = 0;
 
-        $jmlCuti = $jumlah_cuti - ($durasi->days + 1);
-        $user->jumlah_cuti = $jmlCuti;
+        foreach ($durasi as $date) {
+            $dayOfWeek = $date->format('N'); // Get day of the week (1 - Monday, 7 - Sunday)
+
+            if ($dayOfWeek < 6) { // Check if it's not Saturday (6) or Sunday (7)
+                $workdays++;
+            }
+        }
+
+        $user->jumlah_cuti = $jumlah_cuti - $workdays;
         $cuti->updated_at = date("Y-m-d H:i:s");
         $cuti->save();
         $user->updated_at = date("Y-m-d H:i:s");
         $user->save();
+
+        $permohonan = ([
+            'name' => $user->name,
+            'start_date' => $tgl_mulai,
+            'end_date' => $tgl_akhir,
+            'status' => $cuti->status,
+            'total' => $workdays,
+            'remaining' => $user->jumlah_cuti,
+            'note' => $cuti->alasan_cuti,
+        ]);
+
+        Mail::to($user->email)->send(new LeaveMail($permohonan));
 
         return redirect()->route('permohonan.disetujui')->with(['success' => 'Permohonan Cuti Berhasil Disetujui']);
     }

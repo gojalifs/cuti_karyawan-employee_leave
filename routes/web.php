@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\mail\TestMailController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
@@ -46,4 +47,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('karyawan',[PermohonanCutiController::class, 'store'])->name('permohonan.insert');
 
     Route::get('karyawan/permohonan',[PermohonanCutiController::class, 'show'])->name('karyawan.permohonan');
+
+    // Email
+    Route::get('send-approve', [TestMailController::class, 'send'])->name('send.approve');
 });
