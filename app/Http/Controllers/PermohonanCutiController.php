@@ -134,7 +134,7 @@ class PermohonanCutiController extends Controller
 
         $tglMulai = date_create($tgl_mulai);
         $tglAkhir = date_create($tgl_akhir);
-        
+
         // Penghitungan jumlah cuti
         $interval = new DateInterval('P1D'); // 1 day interval
 
@@ -163,7 +163,7 @@ class PermohonanCutiController extends Controller
             'status' => $cuti->status,
             'total' => $workdays,
             'remaining' => $user->jumlah_cuti,
-            'note' => $cuti->alasan_cuti,
+            'note' => strtolower($cuti->alasan_cuti),
         ]);
 
         Mail::to($user->email)->send(new LeaveMail($permohonan));
@@ -172,40 +172,48 @@ class PermohonanCutiController extends Controller
     }
     public function tolak($id)
     {
-        $data = DB::table('users')
-            ->join('permohonan_cuti', 'users.id', '=', 'permohonan_cuti.user_id')
-            ->select(
-                'permohonan_cuti.id',
-                'permohonan_cuti.user_id',
-                'users.name',
-                'permohonan_cuti.alasan_cuti',
-                'permohonan_cuti.tgl_mulai',
-                'permohonan_cuti.tgl_akhir',
-                'permohonan_cuti.status'
-            )
-            ->where('permohonan_cuti.id', $id)
-            ->get();
-        $user_id = '';
-        $alasan_cuti = '';
-        $tgl_mulai = '';
-        $tgl_akhir = '';
-        $status = '';
+        $cuti = Permohonan_Cuti::findOrFail($id);
+        $userId = $cuti->user_id;
 
-        foreach ($data as $key => $value) {
-            $user_id = $value->user_id;
-            $alasan_cuti = $value->alasan_cuti;
-            $tgl_mulai = $value->tgl_mulai;
-            $tgl_akhir = $value->tgl_akhir;
-            $status = $value->status;
+        $user = User::findOrFail($userId);
+
+        $tgl_mulai = $cuti->tgl_mulai;
+        $tgl_akhir = $cuti->tgl_akhir;
+
+        $cuti->status = "ditolak";
+        $cuti->updated_at = date("Y-m-d H:i:s");
+        $cuti->save();
+        $user->updated_at = date("Y-m-d H:i:s");
+        $user->save();
+
+        // Penghitungan jumlah cuti
+
+        $tglMulai = date_create($tgl_mulai);
+        $tglAkhir = date_create($tgl_akhir);
+        $interval = new DateInterval('P1D'); // 1 day interval
+        $durasi = new DatePeriod($tglMulai, $interval, $tglAkhir->modify('+1 day'));
+        $workdays = 0;
+
+        foreach ($durasi as $date) {
+            $dayOfWeek = $date->format('N'); // Get day of the week (1 - Monday, 7 - Sunday)
+
+            if ($dayOfWeek < 6) { // Check if it's not Saturday (6) or Sunday (7)
+                $workdays++;
+            }
         }
 
-        DB::table('permohonan_cuti')->where('id', $id)->update([
-            'user_id' => $user_id,
-            'alasan_cuti' => $alasan_cuti,
-            'tgl_mulai' => $tgl_mulai,
-            'tgl_akhir' => $tgl_akhir,
-            'status' => "ditolak"
+        $permohonan = ([
+            'name' => $user->name,
+            'start_date' => $tgl_mulai,
+            'end_date' => $tgl_akhir,
+            'status' => strtolower("ditolak"),
+            'total' => $workdays,
+            'remaining' => $user->jumlah_cuti,
+            'note' => $cuti->alasan_cuti,
         ]);
+
+        Mail::to($user->email)->send(new LeaveMail($permohonan));
+
 
 
         return redirect()->route('permohonan.ditolak')->with(['success' => 'Permohonan Cuti Berhasi Ditolak!']);

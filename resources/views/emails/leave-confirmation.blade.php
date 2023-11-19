@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Pengajuan Cuti Diterima</title>
+    <title>Pengajuan Cuti {{ $status }} </title>
     <style>
         /* Define styles */
         body {
@@ -31,14 +31,20 @@
 <body>
     <div
         style="font-family: Arial, sans-serif; color: #333333; background-color: #f4f4f4; padding: 20px; border-radius: 5px;">
-        <h1 style="color: #009688; font-size: 24px;">Pengajuan Cuti Diterima</h1>
+        <h1 style="color: #009688; font-size: 24px;">Pengajuan Cuti {{ $status }}</h1>
 
         <p>Halo {{ $name }},</p>
 
         <div class="details" style="margin-top: 15px; border: 1px solid #dddddd; padding: 10px; border-radius: 5px;">
-            <p>Dengan senang hati kami informasikan bahwa izin cuti Anda telah <strong>diterima</strong>.</p>
+            @if ($status == 'diterima')
+                <p>Dengan senang hati kami informasikan bahwa izin cuti Anda telah <strong>{{ $status }}</strong>.
+                </p>
+                <p>Berikut ini rinciannya permohonan cuti Anda:</p>
+            @else
+                <p>Dengan berat hati kami informasikan bahwa izin cuti Anda telah <strong>{{ $status }}</strong>.
+                <p>Berikut ini rinciannya permohonan cuti Anda:</p>
+            @endif
 
-            <p>Berikut ini rinciannya:</p>
             <ul>
                 <li><strong>Nama Karyawan:</strong> {{ $name }}</li>
                 <li><strong>Tanggal Mulai:</strong> {{ $start_date }}</li>

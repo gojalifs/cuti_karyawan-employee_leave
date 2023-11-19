@@ -33,7 +33,7 @@ class LeaveMail extends Mailable
         return $this
             ->from('no-reply.hr@nitigura.com', 'PT Nitigura Indonesia')
             ->subject('Permohonan Cuti')
-            ->view('emails.leave-accepted')
+            ->view('emails.leave-confirmation')
             ->with([
                 "name" => $this->permohonan['name'],
                 'start_date' => $this->permohonan['start_date'],
