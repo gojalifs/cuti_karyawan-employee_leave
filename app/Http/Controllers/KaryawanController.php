@@ -119,7 +119,7 @@ class KaryawanController extends Controller
             DB::table('users')
                 ->where('id', $request->id)
                 ->update([
-                    'passsword' => $request->password
+                    'passsword' => Hash::make($request->password)
                 ]);
         }
 
