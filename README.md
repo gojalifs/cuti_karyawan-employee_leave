@@ -13,10 +13,10 @@ Please, enjoy.
 
 ```
 # clone the repo
-$ git clone https://github.com/Fahrul23/cuti_karyawan_app.git
+$ git clone https://github.com/gojalifs/cuti_karyawan-employee_leave.git
 
 # go into app's directory
-$ cd cuti_karyawan_app
+$ cd cuti_karyawan-employee_leave
 
 # Install Depedency
 $ composer install
@@ -58,3 +58,7 @@ $ php artisan migrate --seed
   password : octa
 	
 ```
+
+# Email
+If you want to send email confirmation to the user, make sure to add your email configuration in .env file
+
