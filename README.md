@@ -7,7 +7,8 @@ Please, enjoy.
 <img src="https://github.com/gojalifs/cuti_karyawan-employee_leave/assets/60059041/a24cbf9e-1df0-48fd-b6e1-c15b606e685b" width="640" height="360">
 
 
-<img src="https://github.com/gojalifs/cuti_karyawan-employee_leave/assets/60059041/d5db7246-94e1-4ad9-9692-f5689a75da1c" width="640" height="360">
+<img src="https://github.com/gojalifs/cuti_karyawan-employee_leave/assets/60059041/29d0c339-ab29-4968-9c87-c19c523f4f68" width="640" height="360">
+
 
 # Installation
 
