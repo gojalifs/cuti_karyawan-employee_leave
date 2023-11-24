@@ -15,8 +15,9 @@ class DashboardController extends Controller
 
         $permohonan = DB::table('users')
             ->join('permohonan_cuti', 'users.id', '=', 'permohonan_cuti.user_id')
-            ->select('users.name', 'users.email', 'permohonan_cuti.id', 'permohonan_cuti.alasan_cuti', 'permohonan_cuti.tgl_mulai', 'permohonan_cuti.tgl_akhir', 'permohonan_cuti.status')
+            ->select('users.name', 'users.email', 'permohonan_cuti.id', 'permohonan_cuti.alasan_cuti', 'permohonan_cuti.tgl_mulai', 'permohonan_cuti.tgl_akhir', 'permohonan_cuti.status', 'permohonan_cuti.created_at')
             ->where('permohonan_cuti.status', 'pending')
+            ->orderBy('created_at', 'desc')
             ->paginate(6);
         $jmlPermohonan = Permohonan_Cuti::where('status', 'pending')->get()->count();
         $jmlPermohonanDisetujui = Permohonan_Cuti::where('status', 'disetujui')->get()->count();
@@ -32,6 +33,7 @@ class DashboardController extends Controller
             ->join('permohonan_cuti', 'users.id', '=', 'permohonan_cuti.user_id')
             ->select('users.name', 'permohonan_cuti.alasan_cuti', 'permohonan_cuti.tgl_mulai', 'permohonan_cuti.tgl_akhir', 'permohonan_cuti.status')
             ->where('users.id', $id)
+            ->orderBy('permohonan_cuti.created_at', 'desc')
             ->limit(5)
             ->get();
         $sisaCuti = DB::table('users')->select('jumlah_cuti')->where('id', $id)->first();

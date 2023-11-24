@@ -140,7 +140,6 @@ class PermohonanCutiController extends Controller
 
         $workdays = 0;
         $durasi = new DatePeriod($tglMulai, $interval, $tglAkhir->modify('+1 day'));
-        $workdays = 0;
 
         foreach ($durasi as $date) {
             $dayOfWeek = $date->format('N'); // Get day of the week (1 - Monday, 7 - Sunday)

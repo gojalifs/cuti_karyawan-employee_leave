@@ -36,7 +36,7 @@
         <p>Halo {{ $name }},</p>
 
         <div class="details" style="margin-top: 15px; border: 1px solid #dddddd; padding: 10px; border-radius: 5px;">
-            @if ($status == 'diterima')
+            @if ($status == 'disetujui')
                 <p>Dengan senang hati kami informasikan bahwa izin cuti Anda telah <strong>{{ $status }}</strong>.
                 </p>
                 <p>Berikut ini rinciannya permohonan cuti Anda:</p>
