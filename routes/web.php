@@ -28,7 +28,7 @@ Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['auth', 'admin'])->group(function () {
 
     // Admin
-    Route::get('admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('admin', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::get('admin/permohonan', [PermohonanCutiController::class, 'index'])->name('permohonan.index');
     Route::get('admin/permohonan/disetujui', [RiwayatPermohonanController::class, 'disetujui'])->name('permohonan.disetujui');
     Route::get('admin/permohonan/ditolak', [RiwayatPermohonanController::class, 'ditolak'])->name('permohonan.ditolak');
