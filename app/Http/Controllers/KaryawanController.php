@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dept;
 use App\Models\User;
 use Hash;
 use Illuminate\Http\Request;
@@ -10,36 +11,26 @@ use DB;
 
 class KaryawanController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         // ->where('user_id', Auth::user()->id)
         $karyawan = DB::table('users')
             ->where('role', 'karyawan')
+            ->join('dept', 'users.dept', '=', 'dept.id')
             ->get();
 
-        return view('pages.Karyawan.index', ['karyawan' => $karyawan]);
-    }
+        $dept = Dept::get();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return view('pages.Karyawan.index', [
+            'karyawan' => $karyawan,
+            'dept' => $dept,
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
@@ -47,6 +38,7 @@ class KaryawanController extends Controller
             'name' => 'required',
             'address' => 'required',
             'phone' => 'required',
+            'dept' => 'required',
             'jumlah_cuti' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required',
@@ -58,6 +50,7 @@ class KaryawanController extends Controller
 
         $user = new User();
         $user->name = $request->name;
+        $user->dept = $request->dept;
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->address = $request->address;
@@ -85,7 +78,6 @@ class KaryawanController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
@@ -93,7 +85,12 @@ class KaryawanController extends Controller
             ->where('id', $id)
             ->get();
 
-        return view('pages.karyawan.FormEdit', ['karyawan' => $karyawan]);
+        $dept = Dept::get();
+
+        return view('pages.karyawan.FormEdit', [
+            'karyawan' => $karyawan,
+            'dept' => $dept
+        ]);
     }
 
     /**
@@ -109,6 +106,7 @@ class KaryawanController extends Controller
             ->where('id', $request->id)
             ->update([
                 'name' => $request->name,
+                'dept' => $request->dept,
                 'email' => $request->email,
                 'address' => $request->address,
                 'phone' => $request->phone,

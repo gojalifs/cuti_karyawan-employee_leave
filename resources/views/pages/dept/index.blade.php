@@ -23,34 +23,25 @@
                     <div id="flash-data" data-flashdata="{{ Session::get('success') }}"></div>
                     <div class="card">
                         <div class="card-header">
-                            <h4>Data Karyawan</h4>
-                            <a class="btn btn-action bg-blue mr-1" id="openModalLink" href="#">Tambah Karyawan</a>
+                            <h4>Master Data Departemen</h4>
+                            <a class="btn btn-action bg-blue mr-1" id="openModalLink" href="#">Tambah Data Departemen</a>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive table-invoice">
                                 <table class="table table-striped" id="table-1">
                                     <tr>
                                         <th class="text-center">No</th>
-                                        <th>Nama Lengkap</th>
-                                        <th>Departemen</th>
-                                        <th>Email</th>
-                                        <th>Alamat</th>
-                                        <th>No Telpon</th>
-                                        <th>Jumlah Cuti</th>
-                                        <th>Opsi</th>
+                                        <th>Nama Departemen</th>
                                     </tr>
-                                    @foreach ($karyawan as $i => $k)
+                                    @foreach ($dept as $i => $k)
                                         <tr>
                                             <td class="p-0 text-center">{{ $i + 1 }}</td>
-                                            <td class="font-weight-600">{{ $k->name }}</td>
-                                            <td class="align-middle">{{ $k->email }}</td>
-                                            <td class="align-middle">{{ $k->nama_dept }}</td>
-                                            <td class="text-truncate">{{ $k->address }}</td>
-                                            <td class="align-middle">{{ $k->phone }}</td>
-                                            <td class="align-middle">{{ $k->jumlah_cuti }} Hari</td>
+                                            <td class="font-weight-600">{{ $k->nama_dept }}</td>
                                             <td>
-                                                <a class="btn btn-action bg-purple mr-1"
-                                                    href="{{ route('karyawan.edit', ['id' => $k->id]) }}">Edit</a>
+                                                <a class="btn btn-action bg-purple mr-1" id="edit-dept-{{ $k->id }}"
+                                                    data-id="{{ $k->id }}" data-name="{{ $k->nama_dept }}"
+                                                    data-jumlah="{{ $k->jumlah }}"
+                                                    href="{{ route('dept.edit', ['id' => $k->id]) }}">Edit</a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -68,96 +59,19 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="formModal">Form Tambah Data Karyawan</h5>
+                        <h5 class="modal-title" id="formModal">Form Tambah Data Departemen</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form method="POST" action="{{ route('karyawan.add') }}">
+                        <form method="POST" action="{{ route('dept.add') }}">
                             @csrf
                             <div class="form-group">
-                                <label>Nama Lengkap</label>
+                                <label>Nama Departemen</label>
                                 <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <i class="fas fa-envelope"></i>
-                                        </div>
-                                    </div>
-                                    <input type="text" class="form-control" name="name" required autofocus>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Alamat</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <i class="fas fa-envelope"></i>
-                                        </div>
-                                    </div>
-                                    <input type="text" class="form-control" name="address" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Email</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <i class="fas fa-envelope"></i>
-                                        </div>
-                                    </div>
-                                    <input id="email" type="email" class="form-control" name="email" required>
-                                    <div class="invalid-feedback">
-                                        Please fill in your email
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Departemen</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <i class="fas fa-envelope"></i>
-                                        </div>
-                                    </div>
-                                    <select name="dept" id="dept" style="min-width: 200px;" required>
-                                        @foreach ($dept as $item)
-                                            <option value="{{ $item->id }}">{{ $item->nama_dept }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Kata Sandi</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <i class="fas fa-envelope"></i>
-                                        </div>
-                                    </div>
-                                    <input id="password" type="text" class="form-control" name="password" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>No Telpon</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <i class="fas fa-envelope"></i>
-                                        </div>
-                                    </div>
-                                    <input type="text" class="form-control" name="phone" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Jumlah Cuti</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <i class="fas fa-envelope"></i>
-                                        </div>
-                                    </div>
-                                    <input type="text" class="form-control" name="jumlah_cuti" required>
+                                    <input type="text" class="form-control" name="name" id="name" required
+                                        autofocus>
                                 </div>
                             </div>
 
@@ -179,13 +93,12 @@
                         <h6 class="font-medium m-b-10">Select Layout</h6>
                         <div class="selectgroup layout-color w-50">
                             <label class="selectgroup-item">
-                                <input type="radio" name="value" value="1"
-                                    class="selectgroup-input select-layout" checked>
+                                <input type="radio" name="value" value="1" class="selectgroup-input select-layout"
+                                    checked>
                                 <span class="selectgroup-button">Light</span>
                             </label>
                             <label class="selectgroup-item">
-                                <input type="radio" name="value" value="2"
-                                    class="selectgroup-input select-layout">
+                                <input type="radio" name="value" value="2" class="selectgroup-input select-layout">
                                 <span class="selectgroup-button">Dark</span>
                             </label>
                         </div>

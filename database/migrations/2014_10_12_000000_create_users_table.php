@@ -17,6 +17,8 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->unsignedBigInteger('dept');
+            $table->foreign('dept')->references('id')->on('dept')->restrictOnDelete()->restrictOnUpdate();
             $table->string('address');
             $table->string('phone')->unique();
             $table->smallInteger('jumlah_cuti');

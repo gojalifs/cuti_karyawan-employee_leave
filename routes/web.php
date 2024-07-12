@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CutiController;
+use App\Http\Controllers\DeptController;
 use App\Http\Controllers\mail\TestMailController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -43,6 +44,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('admin/cuti/{id}', [CutiController::class, 'editIndex'])->name('cuti.edit');
     Route::post('admin/cuti', [CutiController::class, 'store'])->name('cuti.add');
     Route::post('admin/cuti/update', [CutiController::class, 'update'])->name('cuti.update');
+
+    // Admin Master dept
+    Route::get('admin/dept', [DeptController::class, 'index'])->name('dept.index');
+    Route::get('admin/dept/{id}', [DeptController::class, 'editIndex'])->name('dept.edit');
+    Route::post('admin/dept', [DeptController::class, 'store'])->name('dept.add');
+    Route::post('admin/dept/update', [DeptController::class, 'update'])->name('dept.update');
 
     // Email
     Route::get('send-approve', [TestMailController::class, 'send'])->name('send.approve');

@@ -27,6 +27,14 @@
                                                 value="{{ $k->email }}" required>
                                         </div>
                                         <div class="form-group">
+                                            <label>Departemen</label>
+                                            <select name="dept" id="dept" style="min-width: 100%; padding: 8px;" required>
+                                                @foreach ($dept as $item)
+                                                    <option value="{{ $item->id }}">{{ $item->nama_dept }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
                                             <label>Alamat</label>
                                             <input type="text" class="form-control" name="address"
                                                 value="{{ $k->address }}" required>
