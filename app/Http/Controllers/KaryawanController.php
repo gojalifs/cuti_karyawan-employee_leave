@@ -21,7 +21,7 @@ class KaryawanController extends Controller
 
         $dept = Dept::get();
 
-        return view('pages.Karyawan.index', [
+        return view('pages.karyawan.index', [
             'karyawan' => $karyawan,
             'dept' => $dept,
         ]);
