@@ -32,11 +32,13 @@
                                     <tr>
                                         <th class="text-center">No</th>
                                         <th>Nama Lengkap</th>
-                                        <th>Departemen</th>
                                         <th>Email</th>
+                                        <th>Departemen</th>
                                         <th>Alamat</th>
                                         <th>No Telpon</th>
-                                        <th>Jumlah Cuti</th>
+                                        <th>Jenis Cuti</th>
+                                        {{-- <th>Jumlah Cuti</th> --}}
+                                        {{-- <th>Jumlah Cuti</th> --}}
                                         <th>Opsi</th>
                                     </tr>
                                     @foreach ($karyawan as $i => $k)
@@ -47,10 +49,14 @@
                                             <td class="align-middle">{{ $k->nama_dept }}</td>
                                             <td class="text-truncate">{{ $k->address }}</td>
                                             <td class="align-middle">{{ $k->phone }}</td>
-                                            <td class="align-middle">{{ $k->jumlah_cuti }} Hari</td>
+                                            <td class="align-middle">
+                                                {{ implode(', ', $k->cuti) }}
+                                            </td>
+                                            {{-- <td class="align-middle">{{ $k->sisa }} Hari</td> --}}
+                                            {{-- <td class="align-middle">{{ $k->jumlah_cuti }} Hari</td> --}}
                                             <td>
                                                 <a class="btn btn-action bg-purple mr-1"
-                                                    href="{{ route('karyawan.edit', ['id' => $k->id]) }}">Edit</a>
+                                                    href="{{ route('karyawan.edit', ['id' => $k->user_id]) }}">Edit</a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -150,14 +156,25 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label>Jumlah Cuti</label>
+                                <label>Jenis Cuti</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
                                             <i class="fas fa-envelope"></i>
                                         </div>
                                     </div>
-                                    <input type="text" class="form-control" name="jumlah_cuti" required>
+                                    <div style="margin-left: 8px;">
+                                        @foreach ($jenis_cuti as $item)
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="cuti[]"
+                                                    id="{{ $item->id }}" value="{{ $item->id }}">
+                                                <label for="{{ $item->id }}" class="form-check-label">
+                                                    {{ $item->nama_cuti }} (default: {{ $item->jumlah }}
+                                                    {{ $item->satuan }})
+                                                </label>
+                                            </div>
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
 

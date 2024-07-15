@@ -28,7 +28,8 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Departemen</label>
-                                            <select name="dept" id="dept" style="min-width: 100%; padding: 8px;" required>
+                                            <select name="dept" id="dept" style="min-width: 100%; padding: 8px;"
+                                                required>
                                                 @foreach ($dept as $item)
                                                     <option value="{{ $item->id }}">{{ $item->nama_dept }}</option>
                                                 @endforeach
@@ -45,10 +46,17 @@
                                                 value="{{ $k->phone }}" required>
                                         </div>
 
-                                        <div class="form-group">
-                                            <label>Jumlah Cuti</label>
-                                            <input type="text" class="form-control" name="jumlah_cuti"
-                                                value="{{ $k->jumlah_cuti }}" required>
+                                        <div>Jenis Cuti</div>
+                                        <div>                                            
+                                            @foreach ($cuties as $key => $cuti)
+                                                <div class="form-check">
+                                                    <label for="{{ $cuti->id }}"
+                                                        class="form-check-label">{{ $cuti->nama_cuti }}
+                                                    </label>
+                                                    <input type="checkbox" class="form-check-input" name="cuti[]"
+                                                        id="{{ $cuti->id }}" value="{{ $cuti->id }}">
+                                                </div>
+                                            @endforeach
                                         </div>
 
                                         <div class="form-group">

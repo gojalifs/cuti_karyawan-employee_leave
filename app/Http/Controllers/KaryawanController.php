@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cuti;
+use App\Models\DataCuti;
 use App\Models\Dept;
 use App\Models\User;
 use Hash;
 use Illuminate\Http\Request;
 use DB;
+use Log;
 
 
 class KaryawanController extends Controller
@@ -17,13 +20,31 @@ class KaryawanController extends Controller
         $karyawan = DB::table('users')
             ->where('role', 'karyawan')
             ->join('dept', 'users.dept', '=', 'dept.id')
+            ->select(['*', 'users.id as user_id'])
             ->get();
 
         $dept = Dept::get();
+        $jenisCuti = Cuti::all();
+
+        foreach ($karyawan as $k) {
+
+            $dataCuti = DataCuti::where('user_id', '=', $k->user_id)
+                ->join('cuti', 'data_cuti.cuti_id', '=', 'cuti.id')
+                ->get();
+
+            if (!empty($dataCuti)) {
+                $cuti = [];
+                foreach ($dataCuti as $c) {
+                    array_push($cuti, $c->nama_cuti);
+                }
+                $k->cuti = $cuti;
+            }
+        }
 
         return view('pages.karyawan.index', [
             'karyawan' => $karyawan,
             'dept' => $dept,
+            'jenis_cuti' => $jenisCuti,
         ]);
     }
 
@@ -39,12 +60,12 @@ class KaryawanController extends Controller
             'address' => 'required',
             'phone' => 'required',
             'dept' => 'required',
-            'jumlah_cuti' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required',
         ]);
 
         if (!$status) {
+            Log::debug($status);
             return back()->with('error', 'Error validate');
         }
 
@@ -54,11 +75,19 @@ class KaryawanController extends Controller
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->address = $request->address;
-        $user->jumlah_cuti = $request->jumlah_cuti;
         $user->role = 'karyawan';
         $user->password = Hash::make($request->password);
 
-        $user->save();
+        $result = $user->save();
+        Log::debug($result);
+        foreach ($request->cuti as $c) {
+            $cuti = new DataCuti();
+
+            $cuti->user_id = $user->id;
+            $cuti->cuti_id = $c;
+            $status = $cuti->save();
+            Log::debug($status);
+        }
 
         return redirect()->route('karyawan.index')->with(['success' => 'Berhasil Menambah Karyawan']);
     }
@@ -86,10 +115,12 @@ class KaryawanController extends Controller
             ->get();
 
         $dept = Dept::get();
+        $cuties = Cuti::get();
 
         return view('pages.karyawan.FormEdit', [
             'karyawan' => $karyawan,
-            'dept' => $dept
+            'dept' => $dept,
+            'cuties' => $cuties
         ]);
     }
 
@@ -102,6 +133,8 @@ class KaryawanController extends Controller
      */
     public function update(Request $request)
     {
+        $cuti = $request->cuti;
+
         DB::table('users')
             ->where('id', $request->id)
             ->update([
@@ -110,8 +143,29 @@ class KaryawanController extends Controller
                 'email' => $request->email,
                 'address' => $request->address,
                 'phone' => $request->phone,
-                'jumlah_cuti' => $request->jumlah_cuti
             ]);
+
+        // DataCuti::where($request->id)->delete();
+
+        // foreach ($request->cuti as $value) {
+        //     $dataCuti = new DataCuti();
+        //     $dataCuti->user_id = $request->id;
+        //     $dataCuti->cuti_id = $value;
+
+        //     $dataCuti->save();
+        // }
+
+
+        DB::table('data_cuti')->where('user_id', '=', $request->id)->delete();
+
+        foreach ($cuti as $c) {
+            DB::table('data_cuti')
+                ->where('user_id', '=', $request->id)
+                ->updateOrInsert([
+                    'user_id' => $request->id,
+                    'cuti_id' => $c,
+                ]);
+        }
 
         if ($request->password) {
             DB::table('users')
