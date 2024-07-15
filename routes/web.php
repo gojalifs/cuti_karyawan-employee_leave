@@ -34,7 +34,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('admin/permohonan', [PermohonanCutiController::class, 'index'])->name('permohonan.index');
     Route::get('admin/permohonan/disetujui', [RiwayatPermohonanController::class, 'disetujui'])->name('permohonan.disetujui');
     Route::get('admin/permohonan/ditolak', [RiwayatPermohonanController::class, 'ditolak'])->name('permohonan.ditolak');
-    Route::get('admin/permohonan/setuju/{id}', [PermohonanCutiController::class, 'setuju'])->name('permohonan.setuju');
+    Route::post('admin/permohonan/setuju', [PermohonanCutiController::class, 'setuju'])->name('permohonan.setuju');
     Route::get('admin/permohonan/tolak/{id}', [PermohonanCutiController::class, 'tolak'])->name('permohonan.tolak');
     Route::get('admin/karyawan', [KaryawanController::class, 'index'])->name('karyawan.index');
     Route::get('admin/karyawan/{id}', [KaryawanController::class, 'edit'])->name('karyawan.edit');

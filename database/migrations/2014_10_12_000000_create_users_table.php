@@ -21,7 +21,6 @@ class CreateUsersTable extends Migration
             $table->foreign('dept')->references('id')->on('dept')->restrictOnDelete()->restrictOnUpdate();
             $table->string('address');
             $table->string('phone')->unique();
-            $table->smallInteger('jumlah_cuti');
             $table->string('password');
             $table->string('role');
             $table->rememberToken();

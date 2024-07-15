@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DataCuti;
 use Illuminate\Http\Request;
 use DB;
 use Auth;
@@ -15,7 +16,7 @@ class DashboardController extends Controller
 
         $permohonan = DB::table('users')
             ->join('permohonan_cuti', 'users.id', '=', 'permohonan_cuti.user_id')
-            ->select('users.name', 'users.email', 'permohonan_cuti.id', 'permohonan_cuti.alasan_cuti', 'permohonan_cuti.tgl_mulai', 'permohonan_cuti.tgl_akhir', 'permohonan_cuti.status', 'permohonan_cuti.created_at')
+            ->select('users.id as users_id', 'users.name', 'users.email', 'permohonan_cuti.id', 'permohonan_cuti.alasan_cuti', 'permohonan_cuti.tgl_mulai', 'permohonan_cuti.tgl_akhir', 'permohonan_cuti.status', 'permohonan_cuti.jenis_cuti', 'permohonan_cuti.created_at')
             ->where('permohonan_cuti.status', 'pending')
             ->orderBy('created_at', 'desc')
             ->paginate(6);
@@ -36,10 +37,14 @@ class DashboardController extends Controller
             ->orderBy('permohonan_cuti.created_at', 'desc')
             ->limit(5)
             ->get();
-        $sisaCuti = DB::table('users')->select('jumlah_cuti')->where('id', $id)->first();
+
+        $dataCuti = DataCuti::join('cuti', 'data_cuti.cuti_id', '=', 'cuti.id')
+            ->where('user_id', '=', $id)
+            ->get();
+        //(object) ['jumlah_cuti' => 0];// DB::table('users')->select('jumlah_cuti')->where('id', $id)->first();
         $jmlPermohonanDisetujui = Permohonan_Cuti::Where('status', 'disetujui')->where('user_id', $id)->get()->count();
         $jmlPermohonanDitolak = Permohonan_Cuti::where('status', 'ditolak')->where('user_id', $id)->get()->count();
 
-        return view('pages.Dashboard.DashboardKaryawan', ["permohonan" => $permohonan, 'sisa_cuti' => $sisaCuti->jumlah_cuti, 'jmlPermohonanDisetujui' => $jmlPermohonanDisetujui, 'jmlPermohonanDitolak' => $jmlPermohonanDitolak]);
+        return view('pages.Dashboard.DashboardKaryawan', ["permohonan" => $permohonan, 'dataCuti' => $dataCuti, 'jmlPermohonanDisetujui' => $jmlPermohonanDisetujui, 'jmlPermohonanDitolak' => $jmlPermohonanDitolak]);
     }
 }

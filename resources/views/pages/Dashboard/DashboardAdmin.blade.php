@@ -90,10 +90,20 @@
                                             <td class="align-middle">{{ $p->tgl_akhir }}</td>
                                             <td class="align-middle"><span
                                                     class="badge badge-warning">{{ $p->status }}</span></td>
-                                            <td>
-                                                <a class="btn btn-action bg-purple mr-1"
-                                                    href="{{ route('permohonan.setuju', ['id' => $p->id]) }}">Setuju</a>
-                                                <a class="btn btn-danger btn-action"
+                                            <td style="display: flex; ">
+                                                <form action="{{ route('permohonan.setuju') }}" method="post">
+                                                    @csrf
+                                                    <input type="hidden" name="user_id" id="user_id"
+                                                        value="{{ $p->users_id }}">
+                                                    <input type="hidden" name="id" id="id"
+                                                        value="{{ $p->id }}">
+                                                    <input type="hidden" name="jenis_cuti" id="jenis_cuti"
+                                                        value="{{ $p->jenis_cuti }}">
+                                                    {{-- <a class="btn btn-action bg-purple mr-1" href="">Setuju</a> --}}
+                                                    <button class="btn btn-action bg-purple mr-1"
+                                                        type="submit">Setuju</button>
+                                                </form>
+                                                <a class="btn btn-danger btn-action" style="height: min-content"
                                                     href="{{ route('permohonan.tolak', ['id' => $p->id]) }}">Tolak</a>
                                             </td>
                                         </tr>
@@ -117,8 +127,8 @@
                         <h6 class="font-medium m-b-10">Select Layout</h6>
                         <div class="selectgroup layout-color w-50">
                             <label class="selectgroup-item">
-                                <input type="radio" name="value" value="1" class="selectgroup-input select-layout"
-                                    checked>
+                                <input type="radio" name="value" value="1"
+                                    class="selectgroup-input select-layout" checked>
                                 <span class="selectgroup-button">Light</span>
                             </label>
                             <label class="selectgroup-item">

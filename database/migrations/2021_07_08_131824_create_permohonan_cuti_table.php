@@ -18,6 +18,8 @@ class CreatePermohonanCutiTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnUpdate()->restrictOnDelete();
             $table->string('alasan_cuti');
+            $table->unsignedBigInteger('jenis_cuti');
+            $table->foreign('jenis_cuti')->references('id')->on('cuti')->restrictOnDelete()->cascadeOnUpdate();
             $table->date('tgl_mulai');
             $table->date('tgl_akhir');
             $table->string('status');
