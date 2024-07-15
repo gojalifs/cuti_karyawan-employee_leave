@@ -19,13 +19,13 @@ class CreateDataCutiTable extends Migration
             $table->foreign('user_id')->references('id')
                 ->on('users')
                 ->restrictOnDelete()
-                ->restrictOnUpdate();
+                ->cascadeOnUpdate();
             $table->unsignedBigInteger('cuti_id');
             $table->foreign('cuti_id')
                 ->on('cuti')
                 ->references('id')
                 ->restrictOnDelete()
-                ->restrictOnUpdate();
+                ->cascadeOnUpdate();
             $table->timestamps();
         });
     }
