@@ -26,6 +26,7 @@ class CreateDataCutiTable extends Migration
                 ->references('id')
                 ->restrictOnDelete()
                 ->cascadeOnUpdate();
+            $table->integer('sisa');
             $table->timestamps();
         });
     }
