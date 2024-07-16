@@ -171,7 +171,7 @@ class PermohonanCutiController extends Controller
             'note' => strtolower($cuti->alasan_cuti),
         ]);
 
-        // Mail::to($user->email)->send(new LeaveMail($permohonan));
+        Mail::to($user->email)->send(new LeaveMail($permohonan));
 
         return redirect()->route('permohonan.disetujui')->with(['success' => 'Permohonan Cuti Berhasil Disetujui']);
     }
