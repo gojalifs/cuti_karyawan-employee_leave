@@ -54,9 +54,15 @@
                                             </td>
                                             {{-- <td class="align-middle">{{ $k->sisa }} Hari</td> --}}
                                             {{-- <td class="align-middle">{{ $k->jumlah_cuti }} Hari</td> --}}
-                                            <td>
-                                                <a class="btn btn-action bg-purple mr-1"
+                                            <td style="display: flex;">
+                                                <a class="btn btn-action bg-purple mr-1" style="height: min-content;"
                                                     href="{{ route('karyawan.edit', ['id' => $k->user_id]) }}">Edit</a>
+                                                <form action="{{ route('karyawan.delete') }}" method="post">
+                                                    @csrf
+                                                    <input type="hidden" name="user_id" id="user_id"
+                                                        value="{{ $k->user_id }}">
+                                                    <button type="submit" class="btn btn-danger mr-1">Hapus</button>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach

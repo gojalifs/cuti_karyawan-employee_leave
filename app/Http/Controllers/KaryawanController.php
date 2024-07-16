@@ -19,6 +19,7 @@ class KaryawanController extends Controller
         // ->where('user_id', Auth::user()->id)
         $karyawan = DB::table('users')
             ->where('role', 'karyawan')
+            ->where('is_active', '1')
             ->join('dept', 'users.dept', '=', 'dept.id')
             ->select(['*', 'users.id as user_id'])
             ->get();
@@ -179,14 +180,13 @@ class KaryawanController extends Controller
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $user = User::find($request->user_id);
+        $user->is_active = 0;
+        $user->save();
+        return redirect()
+            ->route('karyawan.index')
+            ->with(['success' => "Berhasil menghapus karyawan {$user->name} ({$user->id})"]);
     }
 }
