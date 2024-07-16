@@ -84,8 +84,11 @@ class KaryawanController extends Controller
         foreach ($request->cuti as $c) {
             $cuti = new DataCuti();
 
+            $masterCuti = Cuti::find($c);
+
             $cuti->user_id = $user->id;
             $cuti->cuti_id = $c;
+            $cuti->sisa = $masterCuti->jumlah;
             $status = $cuti->save();
             Log::debug($status);
         }
@@ -160,11 +163,13 @@ class KaryawanController extends Controller
         DB::table('data_cuti')->where('user_id', '=', $request->id)->delete();
 
         foreach ($cuti as $c) {
+            $masterCuti = Cuti::find($c);
             DB::table('data_cuti')
                 ->where('user_id', '=', $request->id)
                 ->updateOrInsert([
                     'user_id' => $request->id,
                     'cuti_id' => $c,
+                    'sisa' => $masterCuti->jumlah
                 ]);
         }
 
