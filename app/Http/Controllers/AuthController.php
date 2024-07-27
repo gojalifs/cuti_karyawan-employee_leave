@@ -50,16 +50,16 @@ class AuthController extends Controller
 
         Auth::attempt($data);
         // dd(Auth::user()->is_active == 0);
-        if (Auth::user()->is_active == 0) {
-            Auth::logout();
-            $request->session()->invalidate();
-            $request->session()->regenerateToken();
-
-            Session::flash('error', 'Akun tidak ditemukan.');
-            return redirect()->route('login');
-        }
 
         if (Auth::check()) { // true sekalian session field di users nanti bisa dipanggil via Auth
+            if (Auth::user()->is_active == 0) {
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+
+                Session::flash('error', 'Akun tidak ditemukan.');
+                return redirect()->route('login');
+            }
 
             //Login Success
             if (Auth::user()->role === 'karyawan') {

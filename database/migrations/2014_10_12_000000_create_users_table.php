@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('phone')->unique();
             $table->string('password');
             $table->string('role');
+            $table->unsignedTinyInteger('is_active')->default(1);
             $table->rememberToken();
             $table->timestamp('email_verified_at')->useCurrent();
             $table->timestamp('created_at')->useCurrent();
